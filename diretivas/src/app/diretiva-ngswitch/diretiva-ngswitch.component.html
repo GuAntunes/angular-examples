@@ -1,0 +1,21 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <a [class.active]="aba == 'home'" (click)="aba = 'home'" class="nav-link">Home</a>
+            <a [class.active]="aba == 'mapa'" (click)="aba = 'mapa'" class="nav-link">Mapa</a>
+            <a [class.active]="aba == 'lista'" (click)="aba = 'lista'" class="nav-link">Lista</a>
+        </ul>
+    </div>
+</nav>
+
+<div class="container" [ngSwitch]="aba">
+    <p *ngSwitchCase="'mapa'">
+        Modulo mapa ativado
+    </p>
+    <p *ngSwitchCase="'lista'">
+        Modulo mapa ativado
+    </p>
+    <p *ngSwitchDefault="'home'">
+        Modulo home ativado
+    </p>
+</div>
