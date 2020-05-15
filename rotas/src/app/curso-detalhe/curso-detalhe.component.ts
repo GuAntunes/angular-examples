@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
+import { CursosService } from './../cursos/cursos.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,18 +11,24 @@ import { Subscription } from 'rxjs';
 })
 export class CursoDetalheComponent implements OnInit {
 
-  id: string;
+  id: number;
   inscricao: Subscription;
+  curso: any;
 
-
-  constructor(private route: ActivatedRoute) {
-    // this.id = route.snapshot.params["id"];
+  constructor(private route: ActivatedRoute,
+    private cursosService: CursosService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
     this.inscricao = this.route.params.subscribe(
       (params: any) => {
         this.id = params['id'];
+        this.curso = this.cursosService.getCurso(this.id);
+
+        if(this.curso == null){
+          this.router.navigate(['/naoEncontrado'])
+        }
       }
     );
   }
