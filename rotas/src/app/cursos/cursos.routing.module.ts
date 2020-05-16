@@ -6,9 +6,11 @@ import { CursosComponent } from './cursos.component';
 import { CursoNaoEncontradoComponent } from './curso-nao-encontrado/curso-nao-encontrado.component';
 
 const CURSOS_ROUTES: Routes = [
-    { path: 'cursos', component: CursosComponent},
-    { path: 'curso/:id', component: CursoDetalheComponent},
+    //Para utilizar o lazy loading devemos remover a declaração da rota cursos nesta linha e deixar '',
+    //pois já foi declarada no arquivo app.routing
+    { path: '', component: CursosComponent},
     { path: 'naoEncontrado', component: CursoNaoEncontradoComponent},
+    { path: ':id', component: CursoDetalheComponent},
 ]
 
 @NgModule({
