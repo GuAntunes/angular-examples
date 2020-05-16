@@ -1,7 +1,10 @@
-import { AlunosRoutingModule } from './alunos.routing.module';
-import { AlunosComponent } from './alunos.component';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+
+import { AlunosRoutingModule } from './alunos.routing.module';
+import { AlunosComponent } from './alunos.component';
+import { AlunosService } from './alunos.service';
 import { AlunoFormComponent } from './aluno-form/aluno-form.component';
 import { AlunoDetalheComponent } from './aluno-detalhe/aluno-detalhe.component';
 
@@ -14,9 +17,10 @@ import { AlunoDetalheComponent } from './aluno-detalhe/aluno-detalhe.component';
     ],
     imports: [
         CommonModule,
-        AlunosRoutingModule
+        AlunosRoutingModule,
+        FormsModule
     ],
     exports: [],
-    providers: [],
+    providers: [AlunosService],
 })
 export class AlunosModule { }
