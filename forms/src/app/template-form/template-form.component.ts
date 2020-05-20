@@ -20,8 +20,8 @@ export class TemplateFormComponent implements OnInit {
   }
 
   onSubmit(form) {
-    console.log(form);
-    console.log(this.usuario);
+    this.http.post('enderecoServer/formUsuario', JSON.stringify((form.value)))
+    .subscribe(dados => console.log(dados));
   }
 
   consultaCEP(cep, form) {
@@ -37,7 +37,7 @@ export class TemplateFormComponent implements OnInit {
       if (validacep.test(cep)) {
 
         this.resetaDadosForm(form);
-        
+
         this.http.get(`https://viacep.com.br/ws/${cep}/json/`).subscribe((dados) => this.populaDadosForm(dados, form));
       }
     }
