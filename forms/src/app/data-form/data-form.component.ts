@@ -1,3 +1,5 @@
+import { Observable } from 'rxjs';
+import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { EstadoBr } from './../shared/models/estado-br';
 import { DropdownService } from './../shared/services/dropdown.service';
 import { Component, OnInit } from '@angular/core';
@@ -12,15 +14,23 @@ import { HttpClient } from '@angular/common/http';
 export class DataFormComponent implements OnInit {
 
   formulario: FormGroup;
-  estados: EstadoBr[];
+  estados: Observable<EstadoBr[]>;
+  cargos: any[];
+  tecnologias: any[];
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient,
-    private dropDownService: DropdownService) { }
+  constructor(private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private dropDownService: DropdownService,
+    private cepService: ConsultaCepService) { }
 
   ngOnInit(): void {
 
-    this.dropDownService.getEstadoBr()
-    .subscribe(dados => { this.estados = dados; console.log(dados)});
+    this.estados = this.dropDownService.getEstadoBr();
+    this.cargos = this.dropDownService.getCargos();
+    this.tecnologias = this.dropDownService.getTecnologias();
+
+    // this.dropDownService.getEstadoBr()
+    //   .subscribe(dados => { this.estados = dados; console.log(dados) });
 
     /*
     this.formulario = new FormGroup({
@@ -49,7 +59,9 @@ export class DataFormComponent implements OnInit {
         bairro: [null, Validators.required],
         cidade: [null, Validators.required],
         estado: [null, Validators.required]
-      })
+      }),
+      cargo: [null],
+      tecnologias: [null]
     });
 
   }
@@ -90,22 +102,24 @@ export class DataFormComponent implements OnInit {
   consultaCEP() {
     let cep = this.formulario.get('endereco.cep').value;
 
-    cep = cep.replace(/\D/g, '');
-
-    //Verifica se campo cep possui valor informado.
-    if (cep != "") {
-
-      //Expressão regular para validar o CEP.
-      var validacep = /^[0-9]{8}$/;
-
-      //Valida o formato do CEP.
-      if (validacep.test(cep)) {
-
-        this.resetaDadosForm();
-
-        this.http.get(`https://viacep.com.br/ws/${cep}/json/`).subscribe((dados) => this.populaDadosForm(dados));
-      }
+    if (cep != null && cep !== '') {
+      this.cepService.consultaCEP(cep)
+        .subscribe((dados) => this.populaDadosForm(dados));
     }
+  }
+
+  setarCargo() {
+    const cargo = { nome: 'Dev', nivel: 'Pleno', desc: 'Dev Pl'};
+    this.formulario.get('cargo').setValue(cargo);
+  }
+
+  compararCargos(obj1, obj2){
+    return obj1 && obj2 ? (obj1.nome === obj2.nome && obj1.nivel === obj2.nivel) : obj1 === obj2;
+
+  }
+
+  setarTecnologias() {
+    this.formulario.get('tecnologias').setValue(['java', 'javascript', 'php']);
   }
 
   populaDadosForm(dados) {
