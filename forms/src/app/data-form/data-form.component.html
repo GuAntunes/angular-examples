@@ -1,1 +1,96 @@
-<p>data-form works!</p>
+<form class="form-horizontal" [formGroup]="formulario" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="col-sm-12">
+            <label for="nome">Nome</label>
+        </div>
+        <div class="form-group col-sm-12">
+            <input type="text" class="form-control" id="nome" placeholder="Nome" formControlName="nome"
+                [class.is-invalid]="verificaValidTouched('nome')">
+            <div class="invalid-feedback">
+                Nome é obrigatório.
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="col-sm-12">
+            <label for="email">Email</label>
+        </div>
+        <div class="form-group col-sm-12">
+            <input type="email" class="form-control" id="email" placeholder="nome@email.com" formControlName="email"
+                [class.is-invalid]="verificaValidTouched('email')">
+            <div class="invalid-feedback">
+                Email é obrigatório.
+            </div>
+        </div>
+    </div>
+
+    <div formGroupName="endereco">
+        <div class="form-row">
+            <div class="form-group col-md-3">
+                <label for="cep" class="control-label">CEP</label>
+                <input type="text" class="form-control" id="cep" [class.is-invalid]="verificaValidTouched('endereco.cep')" formControlName="cep"
+                (blur)="consultaCEP()">
+                <div class="invalid-feedback">
+                    CEP é obrigatório.
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="numero" class="control-label">Número</label>
+                <input type="text" class="form-control" id="numero" [class.is-invalid]="verificaValidTouched('endereco.numero')" formControlName="numero">
+                <div class="invalid-feedback">
+                    Número é obrigatório.
+                </div>
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="complemento" class="control-label">Complemento</label>
+                <input type="text" class="form-control" id="complemento" [class.is-invalid]="verificaValidTouched('endereco.complemento')" formControlName="complemento">
+                <div class="invalid-feedback">
+                    Complemento é obrigatório.
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-sm-12">
+                <label for="rua">Rua</label>
+            </div>
+            <div class="form-group col-sm-12">
+                <input type="text" class="form-control" id="rua" placeholder="nome@rua.com" [class.is-invalid]="verificaValidTouched('endereco.rua')" formControlName="rua">
+                <div class="invalid-feedback">
+                    Rua é obrigatório.
+                </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-5">
+                <label for="bairro" class="control-label">Bairro</label>
+                <input type="text" class="form-control" id="bairro" [class.is-invalid]="verificaValidTouched('endereco.bairro')" formControlName="bairro">
+                <div class="invalid-feedback">
+                    Bairro é obrigatório.
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="cidade" class="control-label">Cidade</label>
+                <input type="text" class="form-control" id="cidade" [class.is-invalid]="verificaValidTouched('endereco.cidade')" formControlName="cidade">
+                <div class="invalid-feedback">
+                    Cidade é obrigatório.
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="estado" class="control-label">Estado</label>
+                <input type="text" class="form-control" id="estado" [class.is-invalid]="verificaValidTouched('endereco.estado')" formControlName="estado">
+                <div class="invalid-feedback">
+                    Estado é obrigatório.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <button (click)="resetar()" class="btn">Cancelar</button>
+
+    <app-form-debug [form]="formulario"></app-form-debug>
+</form>
