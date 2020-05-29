@@ -142,6 +142,19 @@
         </div>
     </div>
 
+
+    <div class="col-md-3">
+        <label for="frameworks">Frameworks</label>
+        <div id="frameworks" class="row">
+          <div class="checkbox" class="col-sm-4" formArrayName="frameworks"
+            formArrayName="frameworks" *ngFor="let item of formulario.get('frameworks')['controls']; let i = index">
+            <label class="checkbox-inline">
+              <input type="checkbox" [formControlName]="i"> {{ frameworks[i] }}
+            </label>
+          </div>
+        </div>
+      </div>
+
     <button type="submit" class="btn btn-primary">Submit</button>
     <button (click)="resetar()" class="btn">Cancelar</button>
     <button (click)="setarCargo()" class="btn">Cargo</button>

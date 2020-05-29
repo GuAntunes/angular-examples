@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { ConsultaCepService } from './../shared/services/consulta-cep.service';
 import { EstadoBr } from './../shared/models/estado-br';
@@ -19,6 +20,7 @@ export class DataFormComponent implements OnInit {
   tecnologias: any[];
   newsletterOp: any[];
   termos: any[];
+  frameworks = ['Angular', 'React', 'Vue', 'Sencha'];
 
   constructor(private formBuilder: FormBuilder,
     private http: HttpClient,
@@ -66,12 +68,29 @@ export class DataFormComponent implements OnInit {
       cargo: [null],
       tecnologias: [null],
       newsletter: ['s'],
-      termos: [null, Validators.pattern('true')]
+      termos: [null, Validators.pattern('true')],
+      frameworks: this.buildFrameworks()
     });
 
   }
 
+  buildFrameworks() {
+
+    const values = this.frameworks.map(v => new FormControl(false));
+
+    return this.formBuilder.array(values);
+  }
+
   onSubmit(): void {
+
+    let valueSubmit = Object.assign({}, this.formulario.value);
+
+    valueSubmit = Object.assign(valueSubmit, {
+      frameworks: valueSubmit.frameworks
+      .map((v, i) => v ? this.frameworks[i] : null)
+      .filter(v => v !== null)
+    })
+
     if (this.formulario.valid) {
       this.http.post('https://httpbin.org/post', JSON.stringify((this.formulario.value)))
         .subscribe(dados => {
