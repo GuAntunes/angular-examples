@@ -114,6 +114,34 @@
         </div>
     </div>
 
+    <div class="form-row">
+        <div class="form-group">
+            <label for="newsletter" class="control-label">Newsletter</label>
+            <div id="newsletter" class="row">
+                <div class="col-sm-4" *ngFor="let item of newsletterOp">
+                    <label class="radio-inline">
+                        <input type="radio" [value]="item.valor" formControlName="newsletter" /> {{ item.desc }}
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            <div class="col-md-6">
+                <div class="checkbox">
+                    <label class="checkbox-inline">
+                        <input [class.is-invalid]="verificaValidTouched('termos')" type="checkbox" formControlName="termos"> Aceito os termos
+                        <div class="invalid-feedback">
+                            É necessário aceitar os termos de uso
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <button type="submit" class="btn btn-primary">Submit</button>
     <button (click)="resetar()" class="btn">Cancelar</button>
     <button (click)="setarCargo()" class="btn">Cargo</button>
