@@ -1,3 +1,4 @@
+import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, empty, Subject } from 'rxjs';
 import { CursosService } from './../cursos.service';
 import { Component, OnInit } from '@angular/core';
@@ -18,7 +19,9 @@ export class CursosListaComponent implements OnInit {
 
   error$ = new Subject<boolean>();
 
-  constructor(private service: CursosService) { }
+  constructor(private service: CursosService,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.onRefresh();
@@ -43,6 +46,10 @@ export class CursosListaComponent implements OnInit {
     //   },
     //   () => console.log('Observable completo!')
     // );
+  }
+
+  onEdit(id) {
+    this.router.navigate(['editar', id], {relativeTo: this.route});
   }
 
 }

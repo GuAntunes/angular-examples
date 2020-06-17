@@ -27,4 +27,8 @@ export class CursosService {
     .pipe(take(1));
   }
 
+  loadById(id) {
+    return this.http.get(`${this.API}/${id}`).pipe(take(1));
+  }
+
 }
